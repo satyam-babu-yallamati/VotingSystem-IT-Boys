@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Panel</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <ul>
+                    {% for category, message in messages %}
+                        <li class="{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+
+        <form action="/admin" method="POST">
+            <h2>Add a Candidate</h2>
+            <label for="name">Candidate Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="party">Party:</label>
+            <input type="text" id="party" name="party" required>
+            <button type="submit" name="add_candidate">Add Candidate</button>
+        </form>
+
+        <form action="/admin" method="POST">
+            <h2>Set Voting Dates</h2>
+            <label for="start_date">Start Date (YYYY-MM-DD):</label>
+            <input type="date" id="start_date" name="start_date" required>
+
+            <label for="end_date">End Date (YYYY-MM-DD):</label>
+            <input type="date" id="end_date" name="end_date" required>
+
+            <button type="submit" name="set_dates">Set Dates</button>
+        </form>
+
+        <h3>Current Candidates</h3>
+        <ul>
+            {% for candidate in candidates.values() %}
+                <li>{{ candidate.name }} ({{ candidate.party }}) - {{ candidate.vote_count }} votes</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>C:\Users\HP 0036\Desktop\project-soc\src\templates\admin.html
